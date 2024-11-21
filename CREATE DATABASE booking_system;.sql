@@ -6,16 +6,16 @@ CREATE TABLE Users (
     full_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     phone_number VARCHAR(15),
-    password VARCHAR(255) NOT NULL,
-    role ENUM('customer', 'therapist', 'admin') NOT NULL,
+    pass VARCHAR(255) NOT NULL,
+    roles ENUM('customer', 'therapist', 'admin') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Services (
     service_id INT AUTO_INCREMENT PRIMARY KEY,
-    service_name VARCHAR(100) NOT NULL,
-    description TEXT,
+    serv_name VARCHAR(100) NOT NULL,
+    descr TEXT,
     duration INT NOT NULL, -- Duration in minutes
     price DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -30,7 +30,7 @@ CREATE TABLE Appointments (
     appointment_date DATE NOT NULL,
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
-    status ENUM('pending', 'confirmed', 'completed', 'canceled') NOT NULL DEFAULT 'pending',
+    stat ENUM('pending', 'confirmed', 'completed', 'canceled') NOT NULL DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
@@ -52,7 +52,7 @@ CREATE TABLE Payments (
 CREATE TABLE Availability (
     availability_id INT AUTO_INCREMENT PRIMARY KEY,
     therapist_id INT NOT NULL,
-    date DATE NOT NULL,
+    dates DATE NOT NULL,
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
     FOREIGN KEY (therapist_id) REFERENCES Users(user_id)
@@ -72,9 +72,9 @@ CREATE TABLE Reviews (
 CREATE TABLE Promotions (
     promo_id INT AUTO_INCREMENT PRIMARY KEY,
     promo_code VARCHAR(50) NOT NULL UNIQUE,
-    description TEXT,
+    descr TEXT,
     discount_percent DECIMAL(5, 2) NOT NULL CHECK (discount_percent >= 0 AND discount_percent <= 100),
-    start_date DATE NOT NULL,
+    init_date DATE NOT NULL,
     end_date DATE NOT NULL
 );
 
