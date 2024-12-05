@@ -21,7 +21,7 @@ $start_time = $_POST['start_time'];
 $end_time = $_POST['end_time'];
 
 
-$user_id = 1;
+$user_id = $_SESSION['user_id']; 
 
 
 $sql = "INSERT INTO Appointments (user_id, therapist_id, service_id, appointment_date, start_time, end_time, status) 
