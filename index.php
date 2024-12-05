@@ -162,7 +162,7 @@ $conn->close();
     <div class="row">
         <div class="col-md-4 mb-4">
             <div class="card service-card">
-                <img src="imgs/whole body massage.jpg" class="card-img-top" alt="Whole Body Massage">
+                <img src="imgs/whole_body_massage.jpg" class="card-img-top" alt="Whole Body Massage">
                 <div class="card-body">
                     <h5 class="card-title">Whole Body Massage</h5>
                     <p class="card-text">Indulge in a relaxing full-body massage designed to relieve stress, improve circulation, and promote overall well-being.</p>
@@ -174,7 +174,7 @@ $conn->close();
 
         <div class="col-md-4 mb-4">
             <div class="card service-card">
-                <img src="imgs/facial treatment.jpg" class="card-img-top" alt="Facial Treatment"> 
+                <img src="imgs/facial_treatment.jpg" class="card-img-top" alt="Facial Treatment"> 
                 <div class="card-body">
                     <h5 class="card-title">Facial Treatment</h5>
                     <p class="card-text">Rejuvenate your skin with our personalized facial treatments that cleanse, exfoliate, and hydrate for a radiant and healthy glow. Perfect for all skin types.</p>
@@ -186,7 +186,7 @@ $conn->close();
 
         <div class="col-md-4 mb-4">
             <div class="card service-card">
-                <img src="imgs/spa manipedi.jpg" class="card-img-top" alt="Spa ManiPedi"> 
+                <img src="imgs/spa_manipedi.jpg" class="card-img-top" alt="Spa ManiPedi"> 
                 <div class="card-body">
                     <h5 class="card-title">Spa ManiPedi</h5>
                     <p class="card-text">Treat your feet and hands with a soothing spa pedicure that includes exfoliation, massage, and nail care.</p>
@@ -199,7 +199,7 @@ $conn->close();
     <div class="row">
         <div class="col-md-6 mb-4">
             <div class="card service-card">
-                <img src="imgs/aroma therapy.jpg" class="card-img-top" alt="Aroma Therapy"> 
+                <img src="imgs/aroma_therapy.jpg" class="card-img-top" alt="Aroma Therapy"> 
                 <div class="card-body">
                     <h5 class="card-title">Aroma Therapy</h5>
                     <p class="card-text">Relax and unwind with our therapeutic massage services that relieve tension and promote overall wellness.</p>
@@ -211,7 +211,7 @@ $conn->close();
 
         <div class="col-md-6 mb-4">
             <div class="card service-card">
-                <img src="imgs/hair treatment.jpg" class="card-img-top" alt="Hair Treatment"> 
+                <img src="imgs/hair_treatment.jpg" class="card-img-top" alt="Hair Treatment"> 
                 <div class="card-body">
                     <h5 class="card-title">Hair Treatment</h5>
                     <p class="card-text">Transform your hair with nourishing treatments that restore shine, strength, and manageability. Options include keratin, hot oil, and scalp detox.</p>
