@@ -89,12 +89,12 @@ $conn->close();
         }
 
         .service-card {
-            transition: transform 0.3s, box-shadow 0.3s; / Smooth transition for transform and box-shadow /
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .service-card:hover {
-            transform: scale(1.05); / Slightly scale up the card /
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); / Increase shadow on hover */
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
         }
 
         .service-card .card-body {
