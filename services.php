@@ -1,20 +1,20 @@
 <?php
-// Database connection
-$host = 'localhost'; // Change if necessary
+
+$host = 'localhost'; 
 $db = 'booking_system';
-$user = 'root'; // Change if necessary
-$pass = ''; // Change if necessary
+$user = 'root'; 
+$pass = ''; 
 
 $conn = new mysqli($host, $user, $pass, $db);
 
-// Check connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Determine sorting criteria
-$sort = isset($_GET['sort']) ? $_GET['sort'] : 'price'; // Default to sorting by price
-$order_by = 'price'; // Default sorting
+
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'price'; 
+$order_by = 'price'; 
 
 switch ($sort) {
     case 'price':
@@ -24,10 +24,10 @@ switch ($sort) {
         $order_by = 'duration';
         break;
     default:
-        $order_by = 'price'; // Fallback to price if invalid
+        $order_by = 'price'; 
 }
 
-// Fetch services from the database with sorting
+
 $sql = "SELECT * FROM Services ORDER BY $order_by";
 $result = $conn->query($sql);
 ?>
@@ -93,10 +93,10 @@ $result = $conn->query($sql);
             background-color: #fff;
         }
         .service-card img {
-            width: 100%; /* Make the image take the full width of the card */
-            height: 200px; /* Set a fixed height for uniformity */
-            object-fit: cover; /* Ensure the image covers the area without distortion */
-            border-radius: 8px; /* Keep the rounded corners */
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
         }
 
         .service-card:hover {

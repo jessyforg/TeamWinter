@@ -32,12 +32,10 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Booking System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Add Font Awesome for star icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* Hero Section */
         .hero {
-            background-image: url('imgs/bg.png'); /* Replace with your background image */
+            background-image: url('imgs/bg.png');
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -51,18 +49,18 @@ $conn->close();
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Darken the background with opacity */
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1;
         }
 
         .hero .card {
-            z-index: 2; /* Ensure the card is above the background */
+            z-index: 2;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             padding: 30px;
-            background-color: rgba(255, 255, 255, 0.9); /* Slight transparency for the card */
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             text-align: center;
@@ -91,7 +89,6 @@ $conn->close();
             background-color: #005f72;
         }
 
-        /* Services Section */
         .service-card img {
             height: 200px;
             object-fit: cover;
@@ -110,30 +107,27 @@ $conn->close();
             padding: 20px;
         }
         
-        /* Testimonials Section */
         .testimonial .card-body {
             padding: 20px;
         }
 
-        /* Star Rating */
         .stars {
-            color: gold; /* Default gold color for full stars */
+            color: gold;
             font-size: 1.5rem;
         }
 
         .stars .fa-star {
-            color: gold; /* Full star color */
+            color: gold; 
         }
 
         .stars .fa-star-half-alt {
-            color: gold; /* Half star color */
+            color: gold; 
         }
 
         .stars .fa-star-o {
-            color: lightgray; /* Empty star color */
+            color: lightgray;
         }
 
-        /* Call to Action Section */
         .cta {
             background-color: #008CBA;
             color: white;
@@ -160,7 +154,6 @@ $conn->close();
 </head>
 <body>
 
-<!-- Hero Section -->
 <div class="hero">
     <div class="card">
         <h1>Your Wellness Journey Starts Here</h1>
@@ -170,11 +163,9 @@ $conn->close();
     </div>
 </div>
 
-<!-- Services Overview Section -->
 <div class="container mt-5" id="services">
     <h2 class="text-center mb-4">Our Popular Services</h2>
     <div class="row">
-        <!-- Service 1 -->
         <div class="col-md-4 mb-4">
             <div class="card service-card">
                 <img src="imgs/whole body massage.jpg" class="card-img-top" alt="Whole Body Massage"> <!-- Replace with actual image -->
@@ -187,7 +178,6 @@ $conn->close();
             </div>
         </div>
 
-        <!-- Service 2 -->
         <div class="col-md-4 mb-4">
             <div class="card service-card">
                 <img src="imgs/facial treatment.jpg" class="card-img-top" alt="Facial Treatment"> <!-- Replace with actual image -->
@@ -200,7 +190,6 @@ $conn->close();
             </div>
         </div>
 
-        <!-- Service 3 -->
         <div class="col-md-4 mb-4">
             <div class="card service-card">
                 <img src="imgs/spa manipedi.jpg" class="card-img-top" alt="Spa ManiPedi"> <!-- Replace with actual image -->
@@ -213,9 +202,7 @@ $conn->close();
             </div>
         </div>
     </div>
-    <!-- Row 2: Service 4 and Service 5 -->
     <div class="row">
-        <!-- Service 4 -->
         <div class="col-md-6 mb-4">
             <div class="card service-card">
                 <img src="imgs/aroma therapy.jpg" class="card-img-top" alt="Aroma Therapy"> <!-- Replace with actual image -->
@@ -228,7 +215,6 @@ $conn->close();
             </div>
         </div>
 
-        <!-- Service 5 -->
         <div class="col-md-6 mb-4">
             <div class="card service-card">
                 <img src="imgs/hair treatment.jpg" class="card-img-top" alt="Hair Treatment"> <!-- Replace with actual image -->
@@ -243,12 +229,10 @@ $conn->close();
     </div>
 </div>
 
-<!-- Testimonials Section -->
 <div class="testimonial" id="testimonials">
     <div class="container">
         <h2 class="text-center mb-4">What Our Customers Say</h2>
         <div class="row">
-            <!-- Dummy Review 1 -->
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-body">
@@ -258,41 +242,36 @@ $conn->close();
                         </div>
                         <p class="card-text">"This is by far the best wellness service I've ever experienced. The whole body massage was incredibly relaxing and rejuvenating. Highly recommend!"</p>
                         <p><strong>Rating: </strong>
-                            <!-- Star Rating -->
                             <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <!-- Displaying 5 gold stars -->
                         </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Dummy Review 2 -->
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <img src="imgs/jane_smith.jpg" alt="Jane Smith" class="rounded-circle" width="50" height="50"> <!-- Profile image -->
+                            <img src="imgs/jane_smith.jpg" alt="Jane Smith" class="rounded-circle" width="50" height="50">
                             <h5 class="card-title ms-3">Jane Smith's Review</h5>
                         </div>
                         <p class="card-text">"The facial treatment was absolutely amazing. My skin has never felt so refreshed. The therapist was professional and attentive. I will definitely come back."</p>
                         <p><strong>Rating: </strong>
-                            <!-- Star Rating -->
                             <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i></span> <!-- Displaying 4.5 stars -->
                         </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Dummy Review 3 -->
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <img src="imgs/susan_clark.jpg" alt="Susan Clark" class="rounded-circle" width="50" height="50"> <!-- Profile image -->
+                            <img src="imgs/susan_clark.jpg" alt="Susan Clark" class="rounded-circle" width="50" height="50">
                             <h5 class="card-title ms-3">Susan Clark's Review</h5>
                         </div>
                         <p class="card-text">"I had an amazing experience at this wellness center. The service was top-notch, and I felt completely pampered. Definitely coming back."</p>
                         <p><strong>Rating: </strong>
-                            <!-- Star Rating -->
                             <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <!-- Displaying 5 gold stars -->
                         </p>
                     </div>
@@ -302,14 +281,12 @@ $conn->close();
     </div>
 </div>
 
-<!-- Call to Action Section -->
 <div class="cta" id="book">
     <h2>Ready to Start Your Wellness Journey?</h2>
     <p>Sign up now and book your first session with one of our expert therapists.</p>
     <a href="signup.php" class="btn btn-lg">Create an Account</a>
 </div>
 
-<!-- Booking Section (Add your form here) -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
