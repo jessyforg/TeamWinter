@@ -1,27 +1,21 @@
 <?php
-// Database connection
 $servername = "localhost";
-$username = "root"; // replace with your database username
-$password = ""; // replace with your database password
+$username = "root";
+$password = "";
 $dbname = "booking_system";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch popular services
 $services_sql = "SELECT * FROM Services LIMIT 3";
 $services_result = $conn->query($services_sql);
 
-// Fetch testimonials
 $reviews_sql = "SELECT * FROM Reviews LIMIT 3";
 $reviews_result = $conn->query($reviews_sql);
 
-// Close the database connection
 $conn->close();
 ?>
 
@@ -168,7 +162,7 @@ $conn->close();
     <div class="row">
         <div class="col-md-4 mb-4">
             <div class="card service-card">
-                <img src="imgs/whole body massage.jpg" class="card-img-top" alt="Whole Body Massage"> <!-- Replace with actual image -->
+                <img src="imgs/whole body massage.jpg" class="card-img-top" alt="Whole Body Massage">
                 <div class="card-body">
                     <h5 class="card-title">Whole Body Massage</h5>
                     <p class="card-text">Indulge in a relaxing full-body massage designed to relieve stress, improve circulation, and promote overall well-being.</p>
@@ -180,7 +174,7 @@ $conn->close();
 
         <div class="col-md-4 mb-4">
             <div class="card service-card">
-                <img src="imgs/facial treatment.jpg" class="card-img-top" alt="Facial Treatment"> <!-- Replace with actual image -->
+                <img src="imgs/facial treatment.jpg" class="card-img-top" alt="Facial Treatment"> 
                 <div class="card-body">
                     <h5 class="card-title">Facial Treatment</h5>
                     <p class="card-text">Rejuvenate your skin with our personalized facial treatments that cleanse, exfoliate, and hydrate for a radiant and healthy glow. Perfect for all skin types.</p>
@@ -192,7 +186,7 @@ $conn->close();
 
         <div class="col-md-4 mb-4">
             <div class="card service-card">
-                <img src="imgs/spa manipedi.jpg" class="card-img-top" alt="Spa ManiPedi"> <!-- Replace with actual image -->
+                <img src="imgs/spa manipedi.jpg" class="card-img-top" alt="Spa ManiPedi"> 
                 <div class="card-body">
                     <h5 class="card-title">Spa ManiPedi</h5>
                     <p class="card-text">Treat your feet and hands with a soothing spa pedicure that includes exfoliation, massage, and nail care.</p>
@@ -205,7 +199,7 @@ $conn->close();
     <div class="row">
         <div class="col-md-6 mb-4">
             <div class="card service-card">
-                <img src="imgs/aroma therapy.jpg" class="card-img-top" alt="Aroma Therapy"> <!-- Replace with actual image -->
+                <img src="imgs/aroma therapy.jpg" class="card-img-top" alt="Aroma Therapy"> 
                 <div class="card-body">
                     <h5 class="card-title">Aroma Therapy</h5>
                     <p class="card-text">Relax and unwind with our therapeutic massage services that relieve tension and promote overall wellness.</p>
@@ -217,7 +211,7 @@ $conn->close();
 
         <div class="col-md-6 mb-4">
             <div class="card service-card">
-                <img src="imgs/hair treatment.jpg" class="card-img-top" alt="Hair Treatment"> <!-- Replace with actual image -->
+                <img src="imgs/hair treatment.jpg" class="card-img-top" alt="Hair Treatment"> 
                 <div class="card-body">
                     <h5 class="card-title">Hair Treatment</h5>
                     <p class="card-text">Transform your hair with nourishing treatments that restore shine, strength, and manageability. Options include keratin, hot oil, and scalp detox.</p>
@@ -237,12 +231,12 @@ $conn->close();
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <img src="imgs/john_doe.jpg" alt="John Doe" class="rounded-circle" width="50" height="50"> <!-- Profile image -->
+                            <img src="imgs/john_doe.jpg" alt="John Doe" class="rounded-circle" width="50" height="50">
                             <h5 class="card-title ms-3">John Doe's Review</h5>
                         </div>
                         <p class="card-text">"This is by far the best wellness service I've ever experienced. The whole body massage was incredibly relaxing and rejuvenating. Highly recommend!"</p>
                         <p><strong>Rating: </strong>
-                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <!-- Displaying 5 gold stars -->
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
                         </p>
                     </div>
                 </div>
@@ -257,7 +251,7 @@ $conn->close();
                         </div>
                         <p class="card-text">"The facial treatment was absolutely amazing. My skin has never felt so refreshed. The therapist was professional and attentive. I will definitely come back."</p>
                         <p><strong>Rating: </strong>
-                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i></span> <!-- Displaying 4.5 stars -->
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fas-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i></span>
                         </p>
                     </div>
                 </div>
@@ -272,7 +266,7 @@ $conn->close();
                         </div>
                         <p class="card-text">"I had an amazing experience at this wellness center. The service was top-notch, and I felt completely pampered. Definitely coming back."</p>
                         <p><strong>Rating: </strong>
-                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> <!-- Displaying 5 gold stars -->
+                            <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
                         </p>
                     </div>
                 </div>
