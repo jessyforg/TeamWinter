@@ -154,7 +154,7 @@ $result = $conn->query($sql);
                     <p>Price: ₱<?= number_format($row['price'], 2) ?></p>
                     <p>Duration: <?= htmlspecialchars($row['duration']) ?> hours</p>
                     <p><?= htmlspecialchars($row['description']) ?></p>
-                    <button class="book-now" onclick="window.location.href='booking_page.php?service_id=<?= $row['service_id'] ?>'">Book Now</button>
+                    <button class="book-now" onclick="window.location.href='book.php?service_id=<?= $row['service_id'] ?>'">Book Now</button>
                 </div>
             <?php endwhile; ?>
         </div>

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $servername = "localhost";
 $username = "root"; 
 $password = ""; 
@@ -8,6 +8,10 @@ $dbname = "booking_system";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

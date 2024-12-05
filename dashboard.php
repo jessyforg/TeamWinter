@@ -51,10 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
-    if (password_verify($current_password, $user['password'])) {
+    if ($current_password === $user['password']) {
         if ($new_password === $confirm_password) {
-            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-            $conn->query("UPDATE Users SET password = '$hashed_password' WHERE user_id = $user_id");
+            $conn->query("UPDATE Users SET password = '$new_password' WHERE user_id = $user_id");
             $password_message = "Password updated successfully.";
         } else {
             $password_message = "New password and confirm password do not match.";
@@ -308,5 +307,6 @@ $promotions = [
             <?php endforeach; ?>
         </div>
     </div>
+    <h1><a href="index.php">Book</a></h1>
 </body>
 </html>

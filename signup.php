@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $full_name = $conn->real_escape_string($_POST['full_name']);
     $email = $conn->real_escape_string($_POST['email']);
     $phone_number = $conn->real_escape_string($_POST['phone_number']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password = $conn->real_escape_string($_POST['password']);
 
     $check_email = $conn->query("SELECT * FROM Users WHERE email = '$email'");
     if ($check_email->num_rows > 0) {
