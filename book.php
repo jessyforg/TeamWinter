@@ -41,38 +41,71 @@ $conn->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.css">
     <style>
-        .card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            margin-top: 30px;
-        }
+    body {
+        background: linear-gradient(to bottom, #FDF7F4, #8EB486, #997C70, #685752);
+        color: #333;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .card-body {
-            padding: 20px;
-        }
+  
+    .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        margin-top: 30px;
+        background: #fff;
+    }
 
-        .btn-next, .btn-previous {
-            margin-top: 20px;
-        }
+    .card-body {
+        padding: 20px;
+    }
 
-        .calendar-container, .time-container, .confirmation-container {
-            display: none;
-            margin-top: 20px;
-        }
+    .btn-next, .btn-previous {
+        margin-top: 20px;
+    }
 
-        .confirmation-card {
-            margin-top: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        }
+   
+    #time-slots {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
 
-        .confirmation-details {
-            padding: 20px;
-        }
+    .time-slot {
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin: 5px;
+        font-weight: bold;
+        background-color: #8EB486; 
+        color: #fff;
+        border: none;
+        transition: transform 0.2s ease-in-out, background-color 0.3s;
+    }
 
-        .confirmation-details h5 {
-            font-weight: bold;
-        }
-    </style>
+    .time-slot:hover {
+        transform: scale(1.1);
+        background-color: #997C70; 
+    }
+
+   
+    .confirmation-container {
+        background: linear-gradient(to right, #FDF7F4, #8EB486);
+    }
+
+    .confirmation-details {
+        padding: 20px;
+    }
+
+    .confirmation-details h5 {
+        font-weight: bold;
+    }
+</style>
 </head>
 <body>
 
