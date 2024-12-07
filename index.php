@@ -144,9 +144,56 @@ $conn->close();
             color: #f39c12;
             font-size: 1.2rem;
         }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: black;
+            font-size: 35px
+            align-items: flex-start;
+        }
+
+        .navbar-nav .nav-link {
+            color: black;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: pink; /* Light hover color */
+            text-decoration: underline;
+        }
+
+        .navbar-toggler-icon {
+            background-color: black; /* White color for the hamburger menu */
+        }
     </style>
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="index.php">Winter Spa</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="book.php">Booking</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">Popular Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#testimonials">Testimonials</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <div class="hero">
     <div class="card">
