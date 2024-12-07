@@ -145,33 +145,48 @@ $conn->close();
             font-size: 1.2rem;
         }
 
+        .navbar {
+        background-color: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .navbar:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
         .navbar-brand {
             font-weight: bold;
-            color: black;
-            font-size: 35px
-            align-items: flex-start;
+            color: #000;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.2);
+            color: #ff69b4;
         }
 
         .navbar-nav .nav-link {
-            color: black;
+            color: #000;
             font-size: 1.1rem;
             text-transform: uppercase;
+            padding: 10px;
+            transition: transform 0.3s ease, color 0.3s ease;
         }
 
         .navbar-nav .nav-link:hover {
-            color: pink; /* Light hover color */
-            text-decoration: underline;
-        }
-
-        .navbar-toggler-icon {
-            background-color: black; /* White color for the hamburger menu */
+            transform: scale(1.1);
+            color: #ff69b4;
         }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container-fluid">
         <a class="navbar-brand" href="index.php">Winter Spa</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -185,7 +200,7 @@ $conn->close();
                     <a class="nav-link" href="book.php">Booking</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#services">Popular Services</a>
+                    <a class="nav-link" href="services.php">Popular Services</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#testimonials">Testimonials</a>
