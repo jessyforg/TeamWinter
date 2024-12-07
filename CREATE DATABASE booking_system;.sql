@@ -45,7 +45,7 @@ CREATE TABLE Payments (
     amount DECIMAL(10,2) NOT NULL,
     payment_method ENUM('cash', 'credit_card', 'paypal') NOT NULL,
     payment_status ENUM('paid', 'unpaid', 'refunded') DEFAULT 'unpaid',
-    transaction_id VARCHAR(100),
+    transaction_id VARCHAR(100), 
     payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (appointment_id) REFERENCES Appointments(appointment_id)
 );
