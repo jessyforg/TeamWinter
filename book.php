@@ -1,18 +1,14 @@
 <?php
-
 $servername = "localhost";
 $username = "root"; 
 $password = ""; 
 $dbname = "booking_system";
 
-
 $conn = new mysqli($servername, $username, $password, $dbname);
-
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 
 $services_sql = "SELECT * FROM Services";
 $services_result = $conn->query($services_sql);
@@ -27,7 +23,6 @@ $therapists_result = $conn->query($therapists_sql);
 if (!$therapists_result) {
     die("Error fetching therapists: " . $conn->error);
 }
-
 
 $conn->close();
 ?>
@@ -52,31 +47,21 @@ $conn->close();
         justify-content: center;
         align-items: center;
     }
-
-  
     .card {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         border-radius: 10px;
         margin-top: 30px;
         background: #fff;
     }
-
     .card-body {
         padding: 20px;
     }
-
-    .btn-next, .btn-previous {
-        margin-top: 20px;
-    }
-
-   
     #time-slots {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
         justify-content: center;
     }
-
     .time-slot {
         padding: 10px 20px;
         border-radius: 5px;
@@ -87,35 +72,23 @@ $conn->close();
         border: none;
         transition: transform 0.2s ease-in-out, background-color 0.3s;
     }
-
     .time-slot:hover {
         transform: scale(1.1);
         background-color: #997C70; 
     }
-
-   
-    .confirmation-container {
-        background: linear-gradient(to right, #FDF7F4, #8EB486);
-    }
-
-    .confirmation-details {
-        padding: 20px;
-    }
-
-    .confirmation-details h5 {
+    .time-slot.active {
+        background-color: #997C70;
         font-weight: bold;
     }
-</style>
+    </style>
 </head>
 <body>
 
 <div class="container">
-   
     <div class="card" id="step1">
         <div class="card-body">
             <h4>Select Service & Therapist</h4>
             <form id="bookingForm">
-             
                 <div class="mb-3">
                     <label for="service" class="form-label">Service</label>
                     <select id="service" class="form-select" required>
@@ -125,8 +98,6 @@ $conn->close();
                         <?php endwhile; ?>
                     </select>
                 </div>
-
-               
                 <div class="mb-3">
                     <label for="therapist" class="form-label">Therapist</label>
                     <select id="therapist" class="form-select" required>
@@ -136,33 +107,30 @@ $conn->close();
                         <?php endwhile; ?>
                     </select>
                 </div>
-
-       
                 <button type="button" id="nextButton" class="btn btn-primary btn-next" disabled>Next</button>
             </form>
         </div>
     </div>
 
-
     <div class="card calendar-container" id="step2">
         <div class="card-body">
             <h4>Select Appointment Date</h4>
             <div id="calendar"></div>
+            <p id="appointment-date-display" class="mt-3"></p>
             <button type="button" class="btn btn-secondary btn-previous">Previous</button>
         </div>
     </div>
 
-   
     <div class="card time-container" id="step3">
         <div class="card-body">
             <h4>Select Appointment Time</h4>
             <div id="time-slots"></div>
+            <p id="appointment-time-display" class="mt-3"></p>
             <button type="button" class="btn btn-secondary btn-previous-time">Previous</button>
-            <button type="button" class="btn btn-primary btn-next-time" disabled>Next</button>
+            <button type="button" class="btn btn-primary btn-next-time">Next</button>
         </div>
     </div>
 
-   
     <div class="card confirmation-container" id="step4">
         <div class="card-body">
             <h4>Confirm Appointment</h4>
@@ -172,7 +140,6 @@ $conn->close();
             <button type="button" class="btn btn-success" id="confirm-appointment">Confirm Appointment</button>
         </div>
     </div>
-
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -182,98 +149,80 @@ $conn->close();
     $(document).ready(function () {
         let selectedService, selectedTherapist, selectedDate, selectedTime, serviceName, therapistName;
 
-        
         $('#service, #therapist').change(function () {
             selectedService = $('#service').val();
             selectedTherapist = $('#therapist').val();
             serviceName = $('#service option:selected').text();
             therapistName = $('#therapist option:selected').text();
-
-            if (selectedService && selectedTherapist) {
-                $('#nextButton').prop('disabled', false);
-            } else {
-                $('#nextButton').prop('disabled', true);
-            }
+            $('#nextButton').prop('disabled', !selectedService || !selectedTherapist);
         });
 
-       
         $('#nextButton').click(function () {
             $('#step1').hide();
             $('#step2').show();
         });
 
-       
         $('#calendar').fullCalendar({
             selectable: true,
             select: function (start) {
                 selectedDate = start.format('YYYY-MM-DD');
-                $('#appointment-time').text('Selected date: ' + selectedDate);
+                $('#appointment-date-display').text('Selected Date: ' + selectedDate);
                 $('#step2').hide();
                 $('#step3').show();
+                loadAvailableTimeSlots();
             }
         });
 
-       
         function loadAvailableTimeSlots() {
-            const slots = [];
-            for (let i = 8; i <= 20; i++) {
-                let time = moment().hours(i).minutes(0).format('HH:mm');
-                slots.push(time);
-            }
-            let slotHtml = '';
-            slots.forEach(slot => {
-                slotHtml += `<button type="button" class="btn btn-outline-primary time-slot" data-time="${slot}">${slot}</button>`;
-            });
-            $('#time-slots').html(slotHtml);
+            const slots = Array.from({ length: 13 }, (_, i) => moment().hours(8 + i).minutes(0).format('HH:mm'));
+            $('#time-slots').html(slots.map(slot =>
+                `<button type="button" class="btn btn-outline-primary time-slot ${slot === selectedTime ? 'active' : ''}" data-time="${slot}">${slot}</button>`).join(''));
         }
 
-       
-        loadAvailableTimeSlots();
-
-      
         $(document).on('click', '.time-slot', function () {
+            $('.time-slot').removeClass('active');
+            $(this).addClass('active');
             selectedTime = $(this).data('time');
-            $('#appointment-time').text('Selected date: ' + selectedDate + ' at ' + selectedTime);
-            $('#step3').hide();
-            $('#step4').show();
-            
-          
-            $('#service-summary').text(serviceName);
-            $('#therapist-name').text(therapistName);
-            $('#appointment-time').text('Appointment: ' + selectedDate + ' at ' + selectedTime);
+            $('#appointment-time-display').text('Selected Time: ' + selectedTime);
         });
 
-      
-        $(".btn-previous-time").click(function () {
+        $('.btn-next-time').click(function () {
+            if (selectedDate && selectedTime) {
+                $('#step3').hide();
+                $('#step4').show();
+                $('#service-summary').text(serviceName);
+                $('#therapist-name').text(therapistName);
+                $('#appointment-time').text(selectedDate + ' at ' + selectedTime);
+            } else {
+                alert('Please select a date and time.');
+            }
+        });
+
+        $('.btn-previous-time').click(function () {
             $('#step3').hide();
             $('#step2').show();
         });
 
-
-        $(".btn-previous").click(function () {
+        $('.btn-previous').click(function () {
             $('#step2').hide();
             $('#step1').show();
         });
 
-      
         $('#confirm-appointment').click(function () {
             $.post('confirm_appointment.php', {
                 service_id: selectedService,
                 therapist_id: selectedTherapist,
                 appointment_date: selectedDate,
                 start_time: selectedTime,
-                end_time: moment(selectedTime, 'HH:mm').add(1, 'hour').format('HH:mm') 
+                end_time: moment(selectedTime, 'HH:mm').add(1, 'hour').format('HH:mm')
             }, function (response) {
-                var data = JSON.parse(response);
+                const data = JSON.parse(response);
                 if (data.status === 'success') {
-                    
                     window.location.href = 'index.php';
                 } else {
                     alert(data.message);
                 }
-            }).fail(function () {
-                alert('Error confirming appointment.');
-            });
+            }).fail(() => alert('Error confirming appointment.'));
         });
     });
 </script>
