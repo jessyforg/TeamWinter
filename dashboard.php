@@ -121,13 +121,14 @@ $promotions = [
         }
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
+            background: linear-gradient(to bottom, #FDF7F4, #8EB486, #997C70, #685752);
             margin: 0;
             padding: 0;
             color: var(--text-color);
         }
+    
         header {
-            background-color: var(--background-color);
+            background-color: var(#FDF7F4);
             color: var(--text-color);
             text-align: center;
             padding: 1rem 0;
