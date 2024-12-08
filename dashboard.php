@@ -110,6 +110,7 @@ $promotions = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script>
         function showReviewForm(appointmentId) {
             document.getElementById('review-form-modal-' + appointmentId).classList.remove('hidden');
@@ -401,10 +402,8 @@ $promotions = [
             <?php endforeach; ?>
         </div>
     </div>
-<<<<<<< HEAD
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-=======
 
->>>>>>> d8e00c964a6d39f244a61c7a0dd7cdb366e28c36
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

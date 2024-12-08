@@ -75,7 +75,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: block;
             color: #555;
         }
-        input, select {
+        input{
+            width: 380px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        select {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;

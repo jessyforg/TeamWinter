@@ -8,20 +8,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $conn->real_escape_string(trim($_POST['email']));
     $password = trim($_POST['password']);
 
-    // Query to fetch user by email
-    $result = $conn->query("SELECT * FROM Users WHERE email = '$email'");
+    $stmt = $conn->prepare("SELECT * FROM Users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        // Check if passwords match
+        
         if ($password === $user['password']) {
+           
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['full_name'] = $user['full_name'];
-            $_SESSION['role'] = $user['role']; // Store role in session
+            $_SESSION['role'] = $user['role'];
 
-            // Redirect based on role
-            if ($user['role'] === 'admin') {
+            
+            if ($user['role'] === 'admin' || $user['role'] === 'therapist') {
                 header("Location: admindashboard.php");
             } elseif ($user['role'] === 'customer') {
                 header("Location: index.php");
@@ -77,11 +80,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #555;
         }
         input {
-            width: 100%;
+            width: 380px;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
+
         }
         button {
             width: 100%;

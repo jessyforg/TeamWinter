@@ -18,6 +18,9 @@ $reviews_sql = "SELECT * FROM Reviews LIMIT 3";
 $reviews_result = $conn->query($reviews_sql);
 
 $conn->close();
+
+$is_logged_in = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
+$user_name = $is_logged_in ? $_SESSION['user_name'] : 'Guest';
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +29,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Booking System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         .hero {
@@ -176,11 +179,48 @@ $conn->close();
             text-transform: uppercase;
             padding: 10px;
             transition: transform 0.3s ease, color 0.3s ease;
+            
         }
-
+        .welcome{
+            margin-left: 100px;
+            color: #000;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            padding: 10px;
+            transition: transform 0.3s ease, color 0.3s ease;
+            display: inline-block;
+        }
         .navbar-nav .nav-link:hover {
             transform: scale(1.1);
             color: #ff69b4;
+        }
+        .btn-login, .btn-logout {
+            display: inline-block;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+
+        .btn-login {
+            background-color: #dc3545; 
+        }
+
+        .btn-login:hover {
+            background-color: #c82333; 
+        }
+
+        .btn-logout {
+            background-color: #dc3545; 
+        }
+
+        .btn-logout:hover {
+            background-color: #c82333; 
         }
     </style>
 </head>
@@ -206,22 +246,23 @@ $conn->close();
                 <li class="nav-item">
                     <a class="nav-link" href="#testimonials">Testimonials</a>
                 </li>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <!-- User is logged in -->
+                <?php if (isset($_SESSION['full_name'])): ?>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-danger text-white" href="login.php">Log Out</a>
+                        <span class="welcome">Welcome, <?= htmlspecialchars($_SESSION['full_name']); ?>!</span>
                     </li>
-                <?php else: ?>
-                    <!-- No user logged in -->
                     <li class="nav-item">
-                        <a class="nav-link btn btn-primary text-white" href="login.php">Log In</a>
+                        <a class="btn btn-logout" href="logout.php">Log Out</a>
+                    </li>
+                    
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="btn btn-login" href="login.php">Log In</a>
                     </li>
                 <?php endif; ?>
             </ul>
         </div>
     </div>
 </nav>
-
 <div class="hero">
     <div class="card">
         <h1>Your Wellness Journey Starts Here</h1>
