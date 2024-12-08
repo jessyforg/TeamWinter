@@ -11,29 +11,23 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-
 $conn = new mysqli($servername, $username, $password, $dbname);
-
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
 $user_id = $_SESSION['user_id']; 
 $user = $conn->query("SELECT * FROM Users WHERE user_id = $user_id")->fetch_assoc();
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $full_name = $conn->real_escape_string($_POST['full_name']);
     $email = $conn->real_escape_string($_POST['email']);
     $phone_number = $conn->real_escape_string($_POST['phone_number']);
 
-
     $result = $conn->query("SELECT * FROM Users WHERE email = '$email' AND user_id != $user_id");
 
     if ($result->num_rows > 0) {
-    
         $profile_message = "The email is already in use by another user.";
     } else {
         $conn->query("
@@ -61,6 +55,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
     } else {
         $password_message = "Current password is incorrect.";
     }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
+    $appointment_id = $_POST['appointment_id'];
+    $rating = $_POST['rating'];
+    $comment = $conn->real_escape_string($_POST['comment']);
+
+    $conn->query("
+        INSERT INTO Reviews (user_id, appointment_id, rating, comment, created_at)
+        VALUES ($user_id, $appointment_id, $rating, '$comment', NOW())
+    ");
+
+    header("Location: dashboard.php"); 
+    exit;
 }
 
 $upcoming_appointments = $conn->query("
@@ -93,7 +101,6 @@ $promotions = [
         'valid_until' => '2025-01-31'
     ]
 ];
-
 ?>
 
 <!DOCTYPE html>
@@ -103,6 +110,13 @@ $promotions = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
     <script>
+        function showReviewForm(appointmentId) {
+            document.getElementById('review-form-modal-' + appointmentId).classList.remove('hidden');
+        }
+
+        function closeReviewForm(appointmentId) {
+            document.getElementById('review-form-modal-' + appointmentId).classList.add('hidden');
+        }
         function showEditProfile() {
             document.getElementById('edit-profile-modal').classList.remove('hidden');
         }
@@ -126,7 +140,6 @@ $promotions = [
             padding: 0;
             color: var(--text-color);
         }
-    
         header {
             background-color: var(#FDF7F4);
             color: var(--text-color);
@@ -161,16 +174,15 @@ $promotions = [
             background-color: var(--primary-color);
             border: 1px solid black;
         }
-        input, label {
+        input, label, textarea {
             display: block;
             width: 100%;
             margin-bottom: 0.5rem;
         }
-        input {
+        input, textarea {
             padding: 0.5rem;
             border: 1px solid #ccc;
             border-radius: 5px;
-            
         }
         .hidden {
             display: none;
@@ -192,7 +204,7 @@ $promotions = [
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--background-color);
+            background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
         .grid {
@@ -238,7 +250,26 @@ $promotions = [
                         <p>Therapist: <?= htmlspecialchars($row['therapist_name']) ?></p>
                         <p>Date: <?= htmlspecialchars($row['appointment_date']) ?></p>
                         <p>Time: <?= htmlspecialchars($row['start_time']) ?> - <?= htmlspecialchars($row['end_time']) ?></p>
-                        <button>Leave a Review</button>
+                        <button onclick="showReviewForm(<?= $row['appointment_id'] ?>)">Leave a Review</button>
+                    </div>
+
+                    <!-- Review Form Modal for the appointment -->
+                    <div id="review-form-modal-<?= $row['appointment_id'] ?>" class="review-form-modal hidden">
+                        <div class="review-form-backdrop" onclick="closeReviewForm(<?= $row['appointment_id'] ?>)"></div>
+                        <div class="modal">
+                            <h3>Leave a Review</h3>
+                            <form method="POST" action="">
+                                <input type="hidden" name="appointment_id" value="<?= $row['appointment_id'] ?>">
+                                <label for="rating">Rating (1-5)</label>
+                                <input type="number" name="rating" min="1" max="5" required>
+
+                                <label for="comment">Review</label>
+                                <textarea name="comment" rows="4" required></textarea>
+
+                                <button type="submit" name="submit_review">Submit Review</button>
+                                <button type="button" onclick="closeReviewForm(<?= $row['appointment_id'] ?>)">Cancel</button>
+                            </form>
+                        </div>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>
@@ -302,12 +333,12 @@ $promotions = [
             <?php foreach ($promotions as $promo): ?>
                 <div class="card">
                     <h3>Promo Code: <?= htmlspecialchars($promo['promo_code']) ?></h3>
-                    <p><?= htmlspecialchars($promo['description']) ?></p>
-                    <p>Valid Until: <?= htmlspecialchars($promo['valid_until']) ?></p>
+                    <p>Description: <?= htmlspecialchars($promo['description']) ?></p>
+                    <p>Valid until: <?= htmlspecialchars($promo['valid_until']) ?></p>
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
-    <h1><a href="index.php">Book</a></h1>
+
 </body>
 </html>
