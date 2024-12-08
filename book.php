@@ -282,16 +282,35 @@ $conn->close();
         $('#payment-method-summary').text(paymentMethod);
     });
 
-    // Confirm Appointment
     $('#confirm-appointment').click(function () {
-        alert(`Appointment Confirmed!
-Service: ${serviceName}
-Therapist: ${therapistName}
-Date: ${selectedDate}
-Time: ${selectedTime}
-Payment Method: ${paymentMethod}`);
-        window.location.href = 'index.php';
+    // Prepare the data to send to the server
+    const appointmentData = {
+        service_id: selectedService,
+        therapist_id: selectedTherapist,
+        appointment_date: selectedDate,
+        start_time: selectedTime,
+        end_time: moment(selectedTime, 'HH:mm').add(1, 'hour').format('HH:mm'),
+        payment_method: paymentMethod
+    };
+
+    // Send the data to the server using $.post
+    $.post('confirm_appointment.php', appointmentData, function (response) {
+        try {
+            var data = JSON.parse(response);
+            if (data.status === 'success') {
+                alert('Appointment confirmed successfully!');
+                window.location.href = 'index.php';
+            } else {
+                alert('Failed to confirm appointment: ' + data.message);
+            }
+        } catch (error) {
+            alert('Unexpected server response: ' + response);
+        }
+    }).fail(function () {
+        alert('Error confirming appointment.');
     });
+});
+
 
     // Navigation Back Buttons
     $('.btn-previous-time').click(function () {
