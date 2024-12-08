@@ -80,11 +80,40 @@ $conn->close();
         background-color: #997C70;
         font-weight: bold;
     }
+    .navbar {
+        background-color: #685752;
+        background-color: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    .navbar:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+    .navbar-brand {
+            font-weight: bold;
+            color: #000;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+            margin-left: 50px;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.2);
+            color: #ff69b4;
+        }
+
+        
     </style>
 </head>
 <body>
-
 <div class="container">
+<nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.php">Winter Spa</a>
+        </div>
+    </nav>
     <div class="card" id="step1">
         <div class="card-body">
             <h4>Select Service & Therapist</h4>

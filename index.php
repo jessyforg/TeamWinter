@@ -1,4 +1,5 @@
 <?php
+session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -205,6 +206,17 @@ $conn->close();
                 <li class="nav-item">
                     <a class="nav-link" href="#testimonials">Testimonials</a>
                 </li>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <!-- User is logged in -->
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-danger text-white" href="login.php">Log Out</a>
+                    </li>
+                <?php else: ?>
+                    <!-- No user logged in -->
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white" href="login.php">Log In</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
