@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="container">
-        <h1>Signup</h1>
+        <h1>Sign Up</h1>
         <form method="POST">
             <label for="full_name">Full Name:</label>
             <input type="text" name="full_name" id="full_name" required>
@@ -130,10 +130,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="therapist">Therapist</option>
                 <option value="admin">Admin</option>
             </select>
-            <button type="submit">Signup</button>
+            <button type="submit">Sign Up</button>
         </form>
         <p class="message"><?= $message ?></p>
-        <p class="text-center">Already have an account? <a href="login.php">Login</a>.</p>
+        <p class="text-center">Already have an account? <a href="login.php">Login</a></p>
     </div>
 </body>
 </html>
