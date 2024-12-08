@@ -46,12 +46,9 @@ $result = $conn->query($sql);
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
-<<<<<<< HEAD
             margin-top: 60px;
-=======
             background: linear-gradient(to bottom, #FDF7F4, #8EB486, #997C70, #685752);
             color: #333;
->>>>>>> d8e00c964a6d39f244a61c7a0dd7cdb366e28c36
         }
 
         .container {
@@ -137,10 +134,10 @@ $result = $conn->query($sql);
         }
 
         .navbar {
-        background-color: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .navbar:hover {
