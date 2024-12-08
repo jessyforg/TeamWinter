@@ -174,29 +174,35 @@ $conn->close();
         </div>
     </div>
 
-    <div class="card confirmation-container" id="step4">
-        <div class="card-body">
-            <h4>Confirm Appointment</h4>
-            <p><strong>Service:</strong> <span id="service-summary"></span></p>
-            <p><strong>Therapist:</strong> <span id="therapist-name"></span></p>
-            <p><strong>Appointment Time:</strong> <span id="appointment-time"></span></p>
-            <button type="button" class="btn btn-success" id="confirm-appointment">Confirm Appointment</button>
+<div class="card payment-container" id="step4">
+    <div class="card-body">
+        <h4>Select Payment Method</h4>
+        <div id="payment-options" class="d-flex justify-content-center">
+            <button type="button" class="btn btn-outline-secondary payment-method" data-method="cash">Cash</button>
+            <button type="button" class="btn btn-outline-secondary payment-method" data-method="credit_card">Credit Card</button>
+            <button type="button" class="btn btn-outline-secondary payment-method" data-method="paypal">PayPal</button>
         </div>
+        <p id="payment-method-display" class="mt-3"></p>
+        <button type="button" class="btn btn-secondary btn-previous-time">Previous</button>
+        <button type="button" class="btn btn-primary btn-next-payment" disabled>Next</button>
     </div>
+</div>
 
-    <div class="card payment-container" id="step5">
-        <div class="card-body">
-            <h4>Select Payment Method</h4>
-            <div id="payment-options" class="d-flex justify-content-center">
-                <button type="button" class="btn btn-outline-secondary payment-method" data-method="cash">Cash</button>
-                <button type="button" class="btn btn-outline-secondary payment-method" data-method="credit_card">Credit Card</button>
-                <button type="button" class="btn btn-outline-secondary payment-method" data-method="paypal">PayPal</button>
-            </div>
-            <p id="payment-method-display" class="mt-3"></p>
-            <button type="button" class="btn btn-secondary btn-previous-payment">Previous</button>
-            <button type="button" class="btn btn-primary btn-finalize" disabled>Finalize Appointment</button>
-        </div>
+
+<div class="card confirmation-container" id="step5">
+    <div class="card-body">
+        <h4>Confirm Appointment</h4>
+        <p><strong>Service:</strong> <span id="service-summary"></span></p>
+        <p><strong>Therapist:</strong> <span id="therapist-name"></span></p>
+        <p><strong>Appointment Time:</strong> <span id="appointment-time"></span></p>
+        <p><strong>Payment Method:</strong> <span id="payment-method-summary"></span></p>
+        <button type="button" class="btn btn-secondary btn-previous-payment">Previous</button>
+        <button type="button" class="btn btn-success" id="confirm-appointment">Confirm Appointment</button>
     </div>
+</div>
+
+
+    
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -204,86 +210,101 @@ $conn->close();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js"></script>
 <script>
     $(document).ready(function () {
-        let selectedService, selectedTherapist, selectedDate, selectedTime, serviceName, therapistName, paymentMethod;
+    let selectedService, selectedTherapist, selectedDate, selectedTime, serviceName, therapistName, paymentMethod;
 
-        $('#service, #therapist').change(function () {
-            selectedService = $('#service').val();
-            selectedTherapist = $('#therapist').val();
-            serviceName = $('#service option:selected').text();
-            therapistName = $('#therapist option:selected').text();
-            $('#nextButton').prop('disabled', !selectedService || !selectedTherapist);
-        });
+    // Service & Therapist Selection
+    $('#service, #therapist').change(function () {
+        selectedService = $('#service').val();
+        selectedTherapist = $('#therapist').val();
+        serviceName = $('#service option:selected').text();
+        therapistName = $('#therapist option:selected').text();
+        $('#nextButton').prop('disabled', !selectedService || !selectedTherapist);
+    });
 
-        $('#nextButton').click(function () {
-            $('#step1').hide();
-            $('#step2').show();
-        });
+    // Next Button to Date Selection
+    $('#nextButton').click(function () {
+        $('#step1').hide();
+        $('#step2').show();
+    });
 
-        $('#calendar').fullCalendar({
-            selectable: true,
-            select: function (start) {
-                selectedDate = start.format('YYYY-MM-DD');
-                $('#appointment-date-display').text('Selected Date: ' + selectedDate);
-                $('#step2').hide();
-                $('#step3').show();
-                loadAvailableTimeSlots();
-            }
-        });
-
-        function loadAvailableTimeSlots() {
-            const slots = Array.from({ length: 13 }, (_, i) => moment().hours(8 + i).minutes(0).format('HH:mm'));
-            $('#time-slots').html(slots.map(slot =>
-                `<button type="button" class="btn btn-outline-primary time-slot ${selectedTime === slot ? 'active' : ''}" data-time="${slot}">${slot}</button>`
-            ).join(''));
+    // Calendar Setup
+    $('#calendar').fullCalendar({
+        selectable: true,
+        select: function (start) {
+            selectedDate = start.format('YYYY-MM-DD');
+            $('#appointment-date-display').text('Selected Date: ' + selectedDate);
+            $('#step2').hide();
+            $('#step3').show();
+            loadAvailableTimeSlots();
         }
+    });
 
-        $(document).on('click', '.time-slot', function () {
-            $('.time-slot').removeClass('active');
-            $(this).addClass('active');
-            selectedTime = $(this).data('time');
-            $('#appointment-time-display').text('Selected Time: ' + selectedTime);
-        });
+    function loadAvailableTimeSlots() {
+        const slots = Array.from({ length: 13 }, (_, i) => moment().hours(8 + i).minutes(0).format('HH:mm'));
+        $('#time-slots').html(slots.map(slot =>
+            `<button type="button" class="btn btn-outline-primary time-slot ${selectedTime === slot ? 'active' : ''}" data-time="${slot}">${slot}</button>`
+        ).join(''));
+    }
 
-        $('.btn-next-time').click(function () {
-            if (selectedDate && selectedTime) {
-                $('#step3').hide();
-                $('#step4').show();
-                $('#service-summary').text(serviceName);
-                $('#therapist-name').text(therapistName);
-                $('#appointment-time').text(selectedDate + ' at ' + selectedTime);
-            } else {
-                alert('Please select a date and time.');
-            }
-        });
+    // Time Slot Selection
+    $(document).on('click', '.time-slot', function () {
+        $('.time-slot').removeClass('active');
+        $(this).addClass('active');
+        selectedTime = $(this).data('time');
+        $('#appointment-time-display').text('Selected Time: ' + selectedTime);
+    });
 
-        $('#confirm-appointment').click(function () {
-            $('#step4').hide();
-            $('#step5').show();
-        });
-
-        $(document).on('click', '.payment-method', function () {
-            $('.payment-method').removeClass('active');
-            $(this).addClass('active');
-            paymentMethod = $(this).data('method');
-            $('#payment-method-display').text('Selected Payment Method: ' + $(this).text());
-            $('.btn-finalize').prop('disabled', false);
-        });
-
-        $('.btn-previous-payment').click(function () {
-            $('#step5').hide();
+    $('.btn-next-time').click(function () {
+        if (selectedDate && selectedTime) {
+            $('#step3').hide();
             $('#step4').show();
-        });
+        } else {
+            alert('Please select a date and time.');
+        }
+    });
 
-        $('.btn-finalize').click(function () {
-            alert(`Appointment finalized!
+    // Payment Method Selection
+    $(document).on('click', '.payment-method', function () {
+        $('.payment-method').removeClass('active');
+        $(this).addClass('active');
+        paymentMethod = $(this).data('method');
+        $('#payment-method-display').text('Selected Payment Method: ' + $(this).text());
+        $('.btn-next-payment').prop('disabled', false);
+    });
+
+    $('.btn-next-payment').click(function () {
+        $('#step4').hide();
+        $('#step5').show();
+        // Update confirmation summary
+        $('#service-summary').text(serviceName);
+        $('#therapist-name').text(therapistName);
+        $('#appointment-time').text(selectedDate + ' at ' + selectedTime);
+        $('#payment-method-summary').text(paymentMethod);
+    });
+
+    // Confirm Appointment
+    $('#confirm-appointment').click(function () {
+        alert(`Appointment Confirmed!
 Service: ${serviceName}
 Therapist: ${therapistName}
 Date: ${selectedDate}
 Time: ${selectedTime}
 Payment Method: ${paymentMethod}`);
-            window.location.href = 'index.php';
-        });
+        window.location.href = 'index.php';
     });
+
+    // Navigation Back Buttons
+    $('.btn-previous-time').click(function () {
+        $('#step3').hide();
+        $('#step2').show();
+    });
+
+    $('.btn-previous-payment').click(function () {
+        $('#step5').hide();
+        $('#step4').show();
+    });
+});
+
 </script>
 </body>
 </html>
