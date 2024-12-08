@@ -42,14 +42,14 @@ $result = $conn->query($sql);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            margin-top: 60px;
-            background: linear-gradient(to bottom, #FDF7F4, #8EB486, #997C70, #685752);
-            color: #333;
-        }
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #FDF7F4, #8EB486, #997C70, #685752);
+    color: #333;
+    min-height: 100vh; 
+}
+
 
         .container {
             width: 90%;
