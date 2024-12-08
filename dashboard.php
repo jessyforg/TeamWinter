@@ -70,6 +70,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
     header("Location: dashboard.php"); 
     exit;
 }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_appointment'])) {
+    $appointment_id = $_POST['appointment_id'];
+
+    $conn->query("DELETE FROM Appointments WHERE appointment_id = $appointment_id");
+
+    header("Location: dashboard.php"); 
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reschedule_appointment'])) {
+    $appointment_id = $_POST['appointment_id'];
+    $new_date = $conn->real_escape_string($_POST['new_date']);
+    $new_start_time = $conn->real_escape_string($_POST['new_start_time']);
+    $new_end_time = $conn->real_escape_string($_POST['new_end_time']);
+
+    $conn->query("
+        UPDATE Appointments 
+        SET appointment_date = '$new_date', start_time = '$new_start_time', end_time = '$new_end_time'
+        WHERE appointment_id = $appointment_id
+    ");
+
+    header("Location: dashboard.php"); 
+    exit;
+}
 
 $upcoming_appointments = $conn->query("
     SELECT a.*, s.service_name, u.full_name AS therapist_name
@@ -124,6 +148,21 @@ $promotions = [
 
         function closeEditProfile() {
             document.getElementById('edit-profile-modal').classList.add('hidden');
+        }
+        function showRescheduleForm(appointmentId) {
+            document.getElementById('reschedule-form-modal-' + appointmentId).classList.remove('hidden');
+        }
+
+        function closeRescheduleForm(appointmentId) {
+            document.getElementById('reschedule-form-modal-' + appointmentId).classList.add('hidden');
+        }
+
+        function showCancelForm(appointmentId) {
+            document.getElementById('cancel-form-modal-' + appointmentId).classList.remove('hidden');
+        }
+
+        function closeCancelForm(appointmentId) {
+            document.getElementById('cancel-form-modal-' + appointmentId).classList.add('hidden');
         }
     </script>
     <style>
@@ -299,23 +338,60 @@ $promotions = [
         <h1>Welcome, <?= htmlspecialchars($user['full_name']) ?></h1>
     </header>
     <div class="container">
-        <h2>Upcoming Appointments</h2>
-        <div class="grid">
-            <?php if ($upcoming_appointments->num_rows > 0): ?>
-                <?php while ($row = $upcoming_appointments->fetch_assoc()): ?>
-                    <div class="card">
-                        <h3><?= htmlspecialchars($row['service_name']) ?></h3>
-                        <p>Therapist: <?= htmlspecialchars($row['therapist_name']) ?></p>
-                        <p>Date: <?= htmlspecialchars($row['appointment_date']) ?></p>
-                        <p>Time: <?= htmlspecialchars($row['start_time']) ?> - <?= htmlspecialchars($row['end_time']) ?></p>
-                        <button>Cancel</button>
-                        <button>Reschedule</button>
-                    </div>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p>No upcoming appointments yet.</p>
-            <?php endif; ?>
-        </div>
+    <h2>Upcoming Appointments</h2>
+<div class="grid">
+    <?php if ($upcoming_appointments->num_rows > 0): ?>
+        <?php while ($row = $upcoming_appointments->fetch_assoc()): ?>
+            <div class="card">
+                <h3><?= htmlspecialchars($row['service_name']) ?></h3>
+                <p>Therapist: <?= htmlspecialchars($row['therapist_name']) ?></p>
+                <p>Date: <?= htmlspecialchars($row['appointment_date']) ?></p>
+                <p>Time: <?= htmlspecialchars($row['start_time']) ?> - <?= htmlspecialchars($row['end_time']) ?></p>
+                <button onclick="showRescheduleForm(<?= $row['appointment_id'] ?>)">Reschedule</button>
+                <button onclick="showCancelForm(<?= $row['appointment_id'] ?>)">Cancel</button>
+            </div>
+
+            <!-- Reschedule Form Modal -->
+            <div id="reschedule-form-modal-<?= $row['appointment_id'] ?>" class="hidden">
+                <div class="modal-backdrop" onclick="closeRescheduleForm(<?= $row['appointment_id'] ?>)"></div>
+                <div class="modal">
+                    <h3>Reschedule Appointment</h3>
+                    <form method="POST" action="">
+                        <input type="hidden" name="appointment_id" value="<?= $row['appointment_id'] ?>">
+                        <label for="new_date">New Date</label>
+                        <input type="date" name="new_date" required>
+                        
+                        <label for="new_start_time">New Start Time</label>
+                        <input type="time" name="new_start_time" required>
+                        
+                        <label for="new_end_time">New End Time</label>
+                        <input type="time" name="new_end_time" required>
+
+                        <button type="submit" name="reschedule_appointment">Save Changes</button>
+                        <button type="button" onclick="closeRescheduleForm(<?= $row['appointment_id'] ?>)">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Cancel Form Modal -->
+            <div id="cancel-form-modal-<?= $row['appointment_id'] ?>" class="hidden">
+                <div class="modal-backdrop" onclick="closeCancelForm(<?= $row['appointment_id'] ?>)"></div>
+                <div class="modal">
+                    <h3>Are you sure you want to cancel this appointment?</h3>
+                    <form method="POST" action="">
+                        <input type="hidden" name="appointment_id" value="<?= $row['appointment_id'] ?>">
+                        <button type="submit" name="cancel_appointment">Yes, Cancel</button>
+                        <button type="button" onclick="closeCancelForm(<?= $row['appointment_id'] ?>)">No</button>
+                    </form>
+                </div>
+            </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <p>No upcoming appointments yet.</p>
+    <?php endif; ?>
+</div>
+       
+
 
         <h2>Past Appointments</h2>
         <div class="grid">
