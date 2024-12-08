@@ -212,7 +212,7 @@ $conn->close();
     $(document).ready(function () {
     let selectedService, selectedTherapist, selectedDate, selectedTime, serviceName, therapistName, paymentMethod;
 
-    // Service & Therapist Selection
+    // Service & Therapist Selection working
     $('#service, #therapist').change(function () {
         selectedService = $('#service').val();
         selectedTherapist = $('#therapist').val();
@@ -221,13 +221,13 @@ $conn->close();
         $('#nextButton').prop('disabled', !selectedService || !selectedTherapist);
     });
 
-    // Next Button to Date Selection
+    // Next Button to Date Selection working disappear
     $('#nextButton').click(function () {
         $('#step1').hide();
         $('#step2').show();
     });
 
-    // Calendar Setup
+    // Calendar Setup working
     $('#calendar').fullCalendar({
         selectable: true,
         select: function (start) {
@@ -246,7 +246,7 @@ $conn->close();
         ).join(''));
     }
 
-    // Time Slot Selection
+    // Time Slot Selection working
     $(document).on('click', '.time-slot', function () {
         $('.time-slot').removeClass('active');
         $(this).addClass('active');
@@ -263,7 +263,7 @@ $conn->close();
         }
     });
 
-    // Payment Method Selection
+    // Payment Method Selection working
     $(document).on('click', '.payment-method', function () {
         $('.payment-method').removeClass('active');
         $(this).addClass('active');
@@ -275,7 +275,7 @@ $conn->close();
     $('.btn-next-payment').click(function () {
         $('#step4').hide();
         $('#step5').show();
-        // Update confirmation summary
+        // Update confirmation summary final
         $('#service-summary').text(serviceName);
         $('#therapist-name').text(therapistName);
         $('#appointment-time').text(selectedDate + ' at ' + selectedTime);
@@ -283,7 +283,7 @@ $conn->close();
     });
 
     $('#confirm-appointment').click(function () {
-    // Prepare the data to send to the server
+    // Prepare the data to send to the server working
     const appointmentData = {
         service_id: selectedService,
         therapist_id: selectedTherapist,
@@ -293,7 +293,7 @@ $conn->close();
         payment_method: paymentMethod
     };
 
-    // Send the data to the server using $.post
+    // Send the data to the server working
     $.post('confirm_appointment.php', appointmentData, function (response) {
         try {
             var data = JSON.parse(response);
@@ -312,7 +312,7 @@ $conn->close();
 });
 
 
-    // Navigation Back Buttons
+    // Navigation Back Buttons working
     $('.btn-previous-time').click(function () {
         $('#step3').hide();
         $('#step2').show();
