@@ -5,12 +5,16 @@ session_start();
 $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $conn->real_escape_string($_POST['email']);
-    $password = $_POST['password'];
+    $email = $conn->real_escape_string(trim($_POST['email']));
+    $password = trim($_POST['password']);
 
+    // Query to fetch user by email
     $result = $conn->query("SELECT * FROM Users WHERE email = '$email'");
+
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
+
+        // Check if passwords match
         if ($password === $user['password']) {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['full_name'] = $user['full_name'];
@@ -19,8 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Redirect based on role
             if ($user['role'] === 'admin') {
                 header("Location: admindashboard.php");
+            } elseif ($user['role'] === 'customer') {
+                header("Location: index.php");
             } else {
-                header("Location: dashboard.php");
+                $message = "Invalid user role.";
             }
             exit;
         } else {
@@ -31,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
